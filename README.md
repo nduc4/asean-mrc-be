@@ -6,7 +6,7 @@
 
 ## Cảnh báo
 
-1. Chương trình được phát triển và hoạt động trên hệ điều hành Linux, distro Fedora 40, chưa kiểm định trên các distro khác như Ubuntu (20.04 - 24.04), Debian-based, Windows (10 - 11)
+1. Chương trình được phát triển và hoạt động trên hệ điều hành Linux, distro Fedora 40, chưa kiểm định trên các distro khác như Debian-based (Ubuntu, Mint,...), Arch-based, Windows (10 - 11)
 
 2. Yêu cầu: phiên bản `Nodejs v20.16.0`, `npm v10.8.1` trở lên hoặc phiên bản `LTS`
 
