@@ -6,6 +6,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { validate } from './common/env.validation';
 import * as path from 'path';
 import { DeviceModule } from './devices/device.module';
+import { MqttModule } from './mqtt/mqtt.module';
 
 @Module({
 	imports: [
@@ -13,7 +14,7 @@ import { DeviceModule } from './devices/device.module';
 			validate,
 			envFilePath: path.resolve(
 				process.cwd(),
-				`.env.${process.env.NODE_ENV || 'development'}`,
+				`.env.${process.env.NODE_ENV ? 'development' : 'development.local'}`,
 			),
 			isGlobal: true,
 		}),
@@ -27,6 +28,7 @@ import { DeviceModule } from './devices/device.module';
 		AuthModule,
 		UserModule,
 		DeviceModule,
+		// MqttModule,
 	],
 })
 export class AppModule {}

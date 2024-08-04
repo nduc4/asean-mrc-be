@@ -45,6 +45,7 @@ NODE_ENV=development npm run start
 ```
 
 ### Chế độ production
+
 ```bash
 NODE_ENV=production npm run start:prod
 ```
