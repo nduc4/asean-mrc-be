@@ -39,8 +39,6 @@ npm i
 ### Chế độ development
 
 ```bash
-npm run start 
-# or
 NODE_ENV=development npm run start
 ```
 
