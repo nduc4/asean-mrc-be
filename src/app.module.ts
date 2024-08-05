@@ -6,7 +6,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { validate } from './common/env.validation';
 import * as path from 'path';
 import { DeviceModule } from './devices/device.module';
-import { MqttModule } from './mqtt/mqtt.module';
+// import { MqttModule } from './mqtt/mqtt.module';
 
 @Module({
 	imports: [
