@@ -11,10 +11,14 @@ import {
 	GatewayDeviceRepo,
 	SensorDeviceRepo,
 } from './data/device.repo';
+import { JwtModule } from '@nestjs/jwt';
+import { ScheduleModule } from '@nestjs/schedule';
 
 @Module({
 	imports: [
 		UserModule,
+		JwtModule,
+		ScheduleModule.forRoot(),
 		MongooseModule.forFeature([
 			{
 				name: Device.name,
@@ -34,5 +38,6 @@ import {
 	],
 	controllers: [DeviceController],
 	providers: [DeviceService, DeviceRepo, GatewayDeviceRepo, SensorDeviceRepo],
+	exports: [SensorDeviceRepo, DeviceService],
 })
 export class DeviceModule {}

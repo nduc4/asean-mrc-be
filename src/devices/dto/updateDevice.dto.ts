@@ -22,6 +22,7 @@ export class UpdateDeviceDto {
 
 	@IsDate()
 	@IsOptional()
+	@Type(() => Date)
 	@ApiProperty({
 		example: '2024-07-29T04:26:57.038Z',
 		description: 'Ngày sản xuất',
@@ -35,6 +36,7 @@ export class UpdateDeviceDto {
 export class UpdateGatewayDeviceDto extends UpdateDeviceDto {
 	@IsNumber()
 	@IsOptional()
+	@Type(() => Number)
 	@ApiProperty({
 		example: 10.762622,
 		description: 'Vĩ độ',
@@ -44,12 +46,22 @@ export class UpdateGatewayDeviceDto extends UpdateDeviceDto {
 
 	@IsNumber()
 	@IsOptional()
+	@Type(() => Number)
 	@ApiProperty({
 		example: 106.660172,
 		description: 'Kinh độ',
 		required: false,
 	})
 	lon?: number;
+
+	@IsString()
+	@Length(1, 100)
+	@IsOptional()
+	@ApiProperty({
+		example: 'gateway123',
+		required: false,
+	})
+	macAddress?: string;
 }
 
 export class UpdateSensorDeviceDto extends UpdateDeviceDto {
@@ -61,15 +73,6 @@ export class UpdateSensorDeviceDto extends UpdateDeviceDto {
 		required: false,
 	})
 	device_id?: string;
-
-	@IsString()
-	@Length(1, 100)
-	@IsOptional()
-	@ApiProperty({
-		example: 'gateway123',
-		required: false,
-	})
-	gateway_id?: string;
 }
 
 @ApiExtraModels(UpdateGatewayDeviceDto, UpdateSensorDeviceDto)

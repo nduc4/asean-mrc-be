@@ -1,38 +1,35 @@
-import { Controller, Get } from '@nestjs/common';
-import {
-	Ctx,
-	MessagePattern,
-	MqttContext,
-	Payload,
-} from '@nestjs/microservices';
+import { Body, Post } from '@nestjs/common';
+import { MessagePattern, Payload } from '@nestjs/microservices';
 import { MqttService } from './mqtt.service';
+import { ApiController } from 'src/common/decorators/apiController.decorator';
+import { Note } from 'src/common/decorators/note.decorator';
+import { ForecastDto } from './dto/forecast.dto';
 
-@Controller()
+@ApiController('forecast')
 export class MqttController {
 	constructor(private readonly mqttService: MqttService) {}
 
-	// Cập nhật trạng thái thiết bị (nhận về)
-	@MessagePattern('devices/status')
-	async updateDeviceStatus(@Payload() data: string, @Ctx() context: MqttContext) {
-		console.log(`Received ping message on topic 'devices/status': ${data}`);
-		console.log(`Topic: ${context.getTopic()}`);
+	@MessagePattern('#')
+	async subscribe(@Payload() data) {
+		await this.mqttService.receive(data);
 	}
 
-	// Tạo thiết bị tự động (nhận về)
-	@MessagePattern('devices/create')
-	async createDevices(@Payload() data: string, @Ctx() context: MqttContext) {
-		return await this.mqttService.createDevices(data, context)
+	@Post('/')
+	@Note({
+		title: 'Dự báo sớm',
+		isInput: true,
+		isPublic: true,
+	})
+	async forecast(@Body() dto: ForecastDto) {
+		return await this.mqttService.forecast(dto);
 	}
 
-	// Cảnh báo đột ngột (nhận về), cập nhật firebase
-	@MessagePattern('warning')
-	async warning(@Payload() data: string) {
-		return await this.mqttService.updateFirebase(data)
-	}
-
-	// Dự báo (v1: mã khu vực, v2: mã khu vực và mực nước (đều lấy từ gateway), 2 tiếng gọi 1 lần)
-	@Get('/')
-	async forecast(lat, lon) {
-		return await this.mqttService.forecast(lat, lon);
+	@Post('send')
+	async sendNotification(
+		@Body('token') token: string,
+		@Body('title') title: string,
+		@Body('body') body: string,
+	) {
+		return await this.mqttService.sendUserNotification(token, title, body);
 	}
 }

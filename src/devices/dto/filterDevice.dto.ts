@@ -2,8 +2,8 @@ import { ApiProperty } from '@nestjs/swagger';
 import { PageAbleDto } from 'src/common/dto/pageable.dto';
 import { GatewayDevice } from '../data/gateway.schema';
 import { SensorDevice } from '../data/sensor.schema';
-import { DeviceStatus } from 'src/common/enums/deviceStatus.enum';
 import {
+	IsBoolean,
 	IsDate,
 	IsEnum,
 	IsMongoId,
@@ -12,18 +12,20 @@ import {
 	IsString,
 	Length,
 } from 'class-validator';
+import { Type } from 'class-transformer';
 
 export class FilterDeviceDto extends PageAbleDto {
-	@IsEnum(DeviceStatus)
+	@IsBoolean()
 	@IsOptional()
 	@ApiProperty({
 		required: false,
-		enum: DeviceStatus,
+		description: 'Trạng thái hoạt động',
 	})
-	status?: string;
+	isActive?: boolean;
 
 	@IsDate()
 	@IsOptional()
+	@Type(() => Date)
 	@ApiProperty({
 		description: 'Ngày bắt đầu (lọc theo ngày sản xuất)',
 		required: false,
@@ -32,6 +34,7 @@ export class FilterDeviceDto extends PageAbleDto {
 
 	@IsDate()
 	@IsOptional()
+	@Type(() => Date)
 	@ApiProperty({
 		description: 'Ngày kết thúc (lọc theo ngày sản xuất)',
 		required: false,
@@ -49,6 +52,7 @@ export class FilterDeviceDto extends PageAbleDto {
 
 	@IsNumber()
 	@IsOptional()
+	@Type(() => Number)
 	@ApiProperty({
 		description: 'Vĩ độ',
 		required: false,
@@ -57,6 +61,7 @@ export class FilterDeviceDto extends PageAbleDto {
 
 	@IsNumber()
 	@IsOptional()
+	@Type(() => Number)
 	@ApiProperty({
 		description: 'Kinh độ',
 		required: false,
@@ -68,8 +73,18 @@ export class FilterDeviceDto extends PageAbleDto {
 	@IsOptional()
 	@ApiProperty({
 		required: false,
+		description: 'ID của thiết bị Sensor',
 	})
 	device_id?: string;
+
+	@IsString()
+	@Length(1, 100)
+	@IsOptional()
+	@ApiProperty({
+		required: false,
+		description: 'Địa chỉ MAC của thiết bị Gateway',
+	})
+	macAddress?: string;
 
 	@IsMongoId()
 	@IsOptional()

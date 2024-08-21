@@ -24,6 +24,12 @@ export class User extends BaseSchema {
 		default: UserRole.USER,
 	})
 	role?: UserRole;
+
+	@Prop({
+		type: [String],
+		required: false,
+	})
+	token?: string[];
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);

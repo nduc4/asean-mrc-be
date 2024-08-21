@@ -5,16 +5,25 @@ import { BaseSchema } from 'src/common/bases/schema';
 @Schema()
 export class GatewayDevice extends BaseSchema {
 	name: string;
-	status?: string;
+	isActive?: boolean;
 	manufacturingDate?: Date;
 	type?: string;
 	user?: User;
 
 	@Prop({ type: Number, required: true })
-	lat?: number;
+	lat: number;
 
 	@Prop({ type: Number, required: true })
-	lon?: number;
+	lon: number;
+
+	@Prop({ type: String, required: true })
+	macAddress: string;
+
+	@Prop({ type: String, required: true })
+	pub: string;
+
+	@Prop({ type: String, required: true })
+	sub: string;
 }
 
 export const GatewayDeviceSchema = SchemaFactory.createForClass(GatewayDevice);

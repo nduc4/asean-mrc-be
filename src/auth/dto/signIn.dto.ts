@@ -3,7 +3,7 @@ import { ApiProperty } from '@nestjs/swagger';
 
 export class SignInDto {
 	@IsPhoneNumber('VN')
-	@ApiProperty({ example: '0816111891' })
+	@ApiProperty({ example: '0816123456' })
 	phone: string;
 
 	@IsString()

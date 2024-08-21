@@ -1,6 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { BaseModel } from 'src/common/bases/model';
-import { DeviceStatus } from 'src/common/enums/deviceStatus.enum';
 import { GatewayDevice } from './gateway.schema';
 import { SensorDevice } from './sensor.schema';
 import { UserModel } from 'src/users/data/user.model';
@@ -10,10 +9,10 @@ export class DeviceModel extends BaseModel {
 	public name: string;
 
 	@ApiProperty({ required: false })
-	manufacturingDate?: Date;
+	public manufacturingDate?: Date;
 
-	@ApiProperty({ enum: DeviceStatus })
-	public status?: string;
+	@ApiProperty()
+	public isActive?: boolean;
 
 	@ApiProperty({
 		enum: [GatewayDevice.name, SensorDevice.name],
@@ -42,7 +41,7 @@ export class DeviceModel extends BaseModel {
 		required: false,
 		example: 'gateway123',
 	})
-	public gateway_id?: string;
+	public macAddress?: string;
 
 	@ApiProperty({ required: false })
 	public user?: UserModel;

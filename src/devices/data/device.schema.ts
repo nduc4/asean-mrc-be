@@ -1,7 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import mongoose from 'mongoose';
 import { BaseSchema } from 'src/common/bases/schema';
-import { DeviceStatus } from 'src/common/enums/deviceStatus.enum';
 import { User } from 'src/users/data/user.schema';
 import { GatewayDevice } from './gateway.schema';
 import { SensorDevice } from './sensor.schema';
@@ -15,13 +14,13 @@ export class Device extends BaseSchema {
 	name: string;
 
 	@Prop({
-		type: String,
-		enum: DeviceStatus,
-		required: false,
+		type: Boolean,
+		required: true,
+		default: true,
 	})
-	status?: string;
+	isActive: boolean;
 
-	@Prop({ type: Date, required: true })
+	@Prop({ type: Date, required: false })
 	manufacturingDate?: Date;
 
 	@Prop({
