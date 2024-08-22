@@ -1,11 +1,9 @@
 import { ApiController } from 'src/common/decorators/apiController.decorator';
 import { LogService } from './log.service';
-import { Get, Param, Query, Req } from '@nestjs/common';
-import { PageAbleDto } from 'src/common/dto/pageable.dto';
+import { Body, Get, Param, Post } from '@nestjs/common';
 import { Note } from 'src/common/decorators/note.decorator';
-import { ApiOkResponse, ApiParam } from '@nestjs/swagger';
+import { ApiParam } from '@nestjs/swagger';
 import { ObjectIdDto } from 'src/common/dto/objectId.dto';
-import { Log } from './data/log.schema';
 
 @ApiController('logs')
 export class LogController {
@@ -24,6 +22,19 @@ export class LogController {
 		type: String,
 	})
 	async getAllLog(@Param() idDto: ObjectIdDto) {
-		return this.logService.getAllLog(idDto);
+		return await this.logService.getAllLog(idDto);
+	}
+
+	@Post()
+	@Note({
+		title: 'Ghi log',
+		isInput: true,
+	})
+	async createLog(
+		@Body('code') code: number,
+		@Body('id') id: string,
+		@Body('content') content: string
+	) {
+		return await this.logService.createLogHttp(code, id, content)
 	}
 }
